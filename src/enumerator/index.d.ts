@@ -25,7 +25,7 @@ type DictionaryEnumeration<T> = {
 } & SharedEnumerationMethods;
 
 /**
- * 	Creates a new enumeration
+ * Creates a new enumeration
  * @param name The unique name of the enumeration
  * @param values The values of the enumeration
  * @returns a new enumeration
