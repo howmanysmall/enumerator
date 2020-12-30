@@ -7,7 +7,7 @@ local ALREADY_USED_NAME_ERROR = "Already used %q as a value name in enum %q."
 local ALREADY_USED_VALUE_ERROR = "Already used %q as a value in enum %q."
 local INVALID_MEMBER_ERROR = "%q (%s) is not a valid member of %s"
 
-local anubarakTuple = t.tuple(
+local enumeratorTuple = t.tuple(
 	t.string,
 	t.union(
 		t.array(t.string),
@@ -31,8 +31,14 @@ local function lockTable(tab, name)
 	})
 end
 
-local function anubarak(enumName, enumValues)
-	assert(anubarakTuple(enumName, enumValues))
+--[[**
+	Creates a new enumeration.
+	@param [t:string] enumName The unique name of the enumeration.
+	@param [t:union(t:array<t:string>, t:keys<t:string>)] enumValues The values of the enumeration.
+	@returns [t:userdata] a new enumeration
+**--]]
+local function enumerator(enumName, enumValues)
+	assert(enumeratorTuple(enumName, enumValues))
 
 	local internal = {}
 	local rawValues = {}
@@ -118,4 +124,4 @@ local function anubarak(enumName, enumValues)
 	return enum
 end
 
-return anubarak
+return enumerator
