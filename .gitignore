@@ -43,3 +43,4 @@ luac.out
 node_modules
 include
 out
+src/enumerator/test.ts
