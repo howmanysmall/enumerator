@@ -1,18 +1,23 @@
 {
   "name": "@rbxts/enumerator",
   "version": "1.0.0",
-  "description": "",
+  "description": "enumerations in pure Luau, following an api almost identical to enumerate",
   "main": "out/init.lua",
+  "types": "out/enumerator/index.d.ts",
+  "author": "howmanysmall",
   "scripts": {
     "prepublishOnly": "rbxtsc"
   },
-  "keywords": [],
-  "author": "HowManySmall",
-  "license": "ISC",
+  "keywords": ["roblox-ts", "enum"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/howmanysmall/enumerator"
+  },
+  "homepage": "https://github.com/howmanysmall/enumerator/blob/main/README.md",
+  "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
-  "types": "out/enumerator/index.d.ts",
   "devDependencies": {
     "@rbxts/compiler-types": "^1.0.0-beta.11.1",
     "@rbxts/types": "^1.0.431",
