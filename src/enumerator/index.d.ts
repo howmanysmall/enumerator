@@ -23,6 +23,7 @@ type DictionaryEnumeration<T> = {
 } & {
 	fromRawValue<K extends keyof T>(key: K): T[K];
 } & SharedEnumerationMethods;
+
 /**
  * 	Creates a new enumeration
  * @param name The unique name of the enumeration
