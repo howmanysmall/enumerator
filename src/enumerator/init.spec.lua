@@ -20,7 +20,7 @@ return function()
 
 		it("should error when accessing an invalid value", function()
 			expect(function()
-				local _ = MyEnum.ValueThree
+				local _ = MyEnum.ValueFour
 			end).to.throw()
 		end)
 
