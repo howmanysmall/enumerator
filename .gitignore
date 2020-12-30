@@ -39,3 +39,7 @@ luac.out
 *.x86_64
 *.hex
 
+# Figure this one out not my problem
+node_modules
+include
+out
