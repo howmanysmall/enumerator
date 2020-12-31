@@ -74,4 +74,29 @@ return function()
 			enumerator("MyCoolEnum", {"ValueOne", "ValueOne"})
 		end).to.throw()
 	end)
+
+	describe("castEnumerator", function()
+		local MyAwesomeEnum = enumerator("MyAwesomeEnum", {"ValueOne"})
+		local castToMyAwesomeEnum = enumerator.castEnumerator(MyAwesomeEnum)
+
+		it("should return the enumeration if found from a value", function()
+			expect(castToMyAwesomeEnum("ValueOne")).to.equal(MyAwesomeEnum.ValueOne)
+		end)
+
+		it("should return the enumeration if found from an enumeration", function()
+			expect(castToMyAwesomeEnum(MyAwesomeEnum.ValueOne)).to.equal(MyAwesomeEnum.ValueOne)
+		end)
+
+		it("should return false and an error message if not found", function()
+			local value, errorMessage = castToMyAwesomeEnum("ValueTwo")
+			expect(value).to.equal(false)
+			expect(errorMessage).to.be.a("string")
+		end)
+
+		it("should error if put into an assert if not found", function()
+			expect(function()
+				assert(castToMyAwesomeEnum("ValueTwo"))
+			end).to.throw()
+		end)
+	end)
 end

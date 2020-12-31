@@ -6,6 +6,7 @@ local t = require(script.t)
 local ALREADY_USED_NAME_ERROR = "Already used %q as a value name in enum %q."
 local ALREADY_USED_VALUE_ERROR = "Already used %q as a value in enum %q."
 local INVALID_MEMBER_ERROR = "%q (%s) is not a valid member of %s"
+local INVALID_VALUE_ERROR = "Couldn't cast value %q (%s) to enumerator %q"
 
 local enumeratorTuple = t.tuple(
 	t.string,
@@ -124,4 +125,36 @@ local function enumerator(enumName, enumValues)
 	return enum
 end
 
-return enumerator
+--[[**
+	Creates a function for the passed enumerator that will cast values to the appropriate enumerator. This behaves like a type checker from t, except it returns the value if it was found.
+	@param [enumerator] castFromEnumerator The enumerator you are casting from.
+	@returns [t:callback] castingFunction This is a function that takes a value and returns the appropriate enumeration if found or false and an error message if it couldn't find it.
+**--]]
+local function castEnumerator(castFromEnumerator)
+	return function(value)
+		if castFromEnumerator.isEnumValue(value) then
+			return value
+		end
+
+		local foundEnumerator = castFromEnumerator.fromRawValue(value)
+		if foundEnumerator ~= nil then
+			return foundEnumerator
+		else
+			return false, string.format(
+				INVALID_VALUE_ERROR,
+				tostring(value),
+				typeof(value),
+				tostring(castFromEnumerator)
+			)
+		end
+	end
+end
+
+return setmetatable({
+	castEnumerator = castEnumerator,
+	enumerator = enumerator,
+}, {
+	__call = function(_, enumName, enumValues)
+		return enumerator(enumName, enumValues)
+	end,
+})
