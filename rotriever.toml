@@ -2,7 +2,7 @@
 name = "howmanysmall/enumerator"
 version = "1.0.0"
 author = "howmanysmall"
-dependencies_root="./src/enumerator"
+dependencies_root="./src/enumerator/"
 content_root = "./src/enumerator"
 license = "MIT"
 
