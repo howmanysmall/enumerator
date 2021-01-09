@@ -1,6 +1,6 @@
 {
   "name": "@rbxts/enumerator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "enumerations in pure Luau, following an api almost identical to enumerate",
   "main": "out/init.lua",
   "types": "out/enumerator/index.d.ts",
