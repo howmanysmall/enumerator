@@ -2,7 +2,7 @@
 // Credit to Xuleos and Osyris for the typing.
 interface FakeEnum<T> {
 	value: T;
-	rawValue(): T;
+	rawValue(this: void): T;
 }
 
 interface SharedEnumerationMethods {
