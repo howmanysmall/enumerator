@@ -1,17 +1,7 @@
 -- enumerations in pure Luau
 -- @docs https://roblox.github.io/enumerate/
 
-local t
-
-local module = assert(script:FindFirstChild("t"), "t wasn't found!")
-if module:IsA("ModuleScript") then
-	t = require(module)
-else
-	local ts = module:FindFirstChild("ts")
-	if ts and ts:IsA("ModuleScript") then
-		t = require(ts)
-	end
-end
+local t = require(script.t)
 
 local ALREADY_USED_NAME_ERROR = "Already used %q as a value name in enum %q."
 local ALREADY_USED_VALUE_ERROR = "Already used %q as a value in enum %q."
