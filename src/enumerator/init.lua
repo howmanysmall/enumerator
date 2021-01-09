@@ -1,7 +1,7 @@
 -- enumerations in pure Luau
 -- @docs https://roblox.github.io/enumerate/
 
-local t = require(script.Parent.t)
+local t = require(script.t)
 
 local ALREADY_USED_NAME_ERROR = "Already used %q as a value name in enum %q."
 local ALREADY_USED_VALUE_ERROR = "Already used %q as a value in enum %q."

@@ -6,5 +6,5 @@ dependencies_root="./src/enumerator/"
 content_root = "./src/enumerator"
 license = "MIT"
 
-[dependencies]
-t = { git = "https://github.com/osyrisrblx/t/" }
+# [dependencies]
+# t = { git = "https://github.com/osyrisrblx/t/" }
