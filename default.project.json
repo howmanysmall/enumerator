@@ -1,9 +1,7 @@
 {
 	"name": "enumerator",
 	"tree": {
-			"$path": "src/enumerator",
-			"$ignoreUnknownInstances": true,
-			"t": {"$path": "modules/t/lib"}
-		}
+		"$path": "src/enumerator",
+		"$ignoreUnknownInstances": true
 	}
 }
