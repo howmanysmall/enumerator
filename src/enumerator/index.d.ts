@@ -1,4 +1,5 @@
 //I'm really sorry if you're looking at this
+// Credit to Xuleos and Osyris for the typing.
 interface FakeEnum<T> {
 	value: T;
 	rawValue(): T;
