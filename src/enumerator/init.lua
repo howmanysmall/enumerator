@@ -17,12 +17,14 @@ local enumeratorTuple = t.tuple(
 )
 
 local function lockTable(tab, name)
+	name = name or tostring(tab)
+
 	local function protectedFunction(_, key)
 		error(string.format(
 			INVALID_MEMBER_ERROR,
 			tostring(key),
 			typeof(key),
-			name
+			tostring(name)
 		))
 	end
 
