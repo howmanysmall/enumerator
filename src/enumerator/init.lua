@@ -80,7 +80,12 @@ local function enumerator(enumName, enumValues)
 			end
 
 			metatable.__index = lockTable({
+				name = valueName,
 				value = valueName,
+				rawName = function()
+					return valueName
+				end,
+
 				rawValue = function()
 					return valueName
 				end,
@@ -105,7 +110,12 @@ local function enumerator(enumName, enumValues)
 			end
 
 			metatable.__index = lockTable({
+				name = valueName,
 				value = rawValue,
+				rawName = function()
+					return valueName
+				end,
+
 				rawValue = function()
 					return rawValue
 				end,
