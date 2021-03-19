@@ -1,5 +1,6 @@
 -- enumerations in pure Luau
 -- @docs https://roblox.github.io/enumerate/
+-- documented changed functions
 
 local t = require(script.t)
 
