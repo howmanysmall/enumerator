@@ -1,0 +1,14 @@
+{
+	"name": "enumerator",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"$ignoreUnknownInstances": true,
+			"enumerator": {
+				"$path": "src/enumerator",
+				"$ignoreUnknownInstances": true
+			}
+		}
+	}
+}

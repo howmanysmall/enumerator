@@ -8,6 +8,14 @@ local ALREADY_USED_NAME_ERROR = "Already used %q as a value name in enum %q."
 local ALREADY_USED_VALUE_ERROR = "Already used %q as a value in enum %q."
 local INVALID_MEMBER_ERROR = "%q (%s) is not a valid member of %s"
 local INVALID_VALUE_ERROR = "Couldn't cast value %q (%s) to enumerator %q"
+local CANNOT_USE_ERROR = "Cannot use '%s' as a value"
+
+local BLACKLISTED_VALUES = {
+	cast = true,
+	fromRawValue = true,
+	getEnumeratorItems = true,
+	isEnumValue = true,
+}
 
 local enumeratorTuple = t.tuple(
 	t.string,
@@ -47,6 +55,7 @@ local function enumerator(enumName, enumValues)
 	local enum = newproxy(true)
 	local internal = {}
 	local rawValues = {}
+	local totalEnums = 0
 
 	function internal.fromRawValue(rawValue)
 		return rawValues[rawValue]
@@ -89,11 +98,25 @@ local function enumerator(enumName, enumValues)
 		end
 	end
 
+	--[[**
+		Returns an array of the enumerator items.
+		@returns [t:array] An array of the items.
+	**--]]
+	function internal.getEnumeratorItems()
+		local enumItems = table.create(totalEnums)
+		local length = 0
+
+		for _, value in pairs(rawValues) do
+			length +=  1
+			enumItems[length] = value
+		end
+
+		return enumItems
+	end
+
 	if enumValues[1] then
 		for _, valueName in ipairs(enumValues) do
-			assert(valueName ~= "fromRawValue", "Cannot use 'fromRawValue' as a value")
-			assert(valueName ~= "isEnumValue", "Cannot use 'isEnumValue' as a value")
-			assert(valueName ~= "cast", "Cannot use 'cast' as a value")
+			assert(not BLACKLISTED_VALUES[valueName], string.format(CANNOT_USE_ERROR, tostring(valueName)))
 			assert(internal[valueName] == nil, string.format(ALREADY_USED_NAME_ERROR, valueName, enumName))
 			assert(rawValues[valueName] == nil, string.format(ALREADY_USED_VALUE_ERROR, valueName, enumName))
 
@@ -124,12 +147,11 @@ local function enumerator(enumName, enumValues)
 
 			internal[valueName] = value
 			rawValues[valueName] = value
+			totalEnums += 1
 		end
 	else
 		for valueName, rawValue in pairs(enumValues) do
-			assert(valueName ~= "fromRawValue", "Cannot use 'fromRawValue' as a value")
-			assert(valueName ~= "isEnumValue", "Cannot use 'isEnumValue' as a value")
-			assert(valueName ~= "cast", "Cannot use 'cast' as a value")
+			assert(not BLACKLISTED_VALUES[valueName], string.format(CANNOT_USE_ERROR, tostring(valueName)))
 			assert(internal[valueName] == nil, string.format(ALREADY_USED_NAME_ERROR, valueName, enumName))
 			assert(rawValues[valueName] == nil, string.format(ALREADY_USED_VALUE_ERROR, valueName, enumName))
 
@@ -160,6 +182,7 @@ local function enumerator(enumName, enumValues)
 
 			internal[valueName] = value
 			rawValues[rawValue] = value
+			totalEnums += 1
 		end
 	end
 
