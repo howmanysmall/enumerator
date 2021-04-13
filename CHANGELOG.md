@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Added `Enumerator.getEnumeratorItems()`, which returns an array of every EnumeratorItem.
+- Added `place.project.json` which allows serving directly to a place.
 
 ### Changed
 - Changed the blacklisted values asserts to a single assert for readability reasons.
