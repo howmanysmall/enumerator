@@ -36,6 +36,7 @@ type describeSKIP = (string) -> nil
 
 return function()
 	local enumerator = require(script.Parent)
+	local t = require(script.Parent.t)
 
 	-- describe = describe :: describe
 	-- expect = expect :: expect
@@ -208,6 +209,20 @@ return function()
 			expect(function()
 				assert(MyCastEnum.cast("ValueThree"))
 			end).to.throw()
+		end)
+	end)
+
+	describe("Enum.getEnumeratorItems", function()
+		local MyListEnum = enumerator("MyListEnum", {"ValueOne", "ValueTwo"})
+		it("should return an array", function()
+			expect(MyListEnum.getEnumeratorItems()).to.be.a("table")
+			expect(t.array(t.any)(MyListEnum.getEnumeratorItems())).to.equal(true)
+		end)
+
+		it("should contain every value", function()
+			for _, enum in ipairs(MyListEnum.getEnumeratorItems()) do
+				expect(MyListEnum.isEnumValue(enum)).to.equal(true)
+			end
 		end)
 	end)
 
