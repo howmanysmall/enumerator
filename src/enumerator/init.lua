@@ -107,7 +107,7 @@ local function enumerator(enumName, enumValues)
 		local length = 0
 
 		for _, value in pairs(rawValues) do
-			length +=  1
+			length += 1
 			enumItems[length] = value
 		end
 
