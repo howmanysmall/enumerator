@@ -43,10 +43,12 @@ local function lockTable(tab, name)
 	})
 end
 
+--t:union<t:array<t:string>, t:keys<t:string>>
+
 --[[**
 	Creates a new enumeration.
 	@param [t:string] enumName The unique name of the enumeration.
-	@param [t:union<t:array<t:string>, t:keys<t:string>>] enumValues The values of the enumeration.
+	@param [t:{string}|{string:any}] enumValues The values of the enumeration.
 	@returns [t:userdata] a new enumeration
 **--]]
 local function enumerator(enumName, enumValues)
@@ -57,10 +59,20 @@ local function enumerator(enumName, enumValues)
 	local rawValues = {}
 	local totalEnums = 0
 
+	--[[**
+		Returns an `EnumerationValue` from the calling `Enumeration` or `nil` if the raw value does not exist.
+		@param [t:any] rawValue The raw value of the enum.
+		@returns [t:EnumerationValue?] The `EnumerationValue` if it was found.
+	**--]]
 	function internal.fromRawValue(rawValue)
 		return rawValues[rawValue]
 	end
 
+	--[[**
+		Returns `true` only if the provided value is an `EnumerationValue` that is a member of the calling `Enumeration`.
+		@param [t:any] value The value to check for.
+		@returns [t:boolean] True iff it is an `EnumerationValue`.
+	**--]]
 	function internal.isEnumValue(value)
 		if typeof(value) ~= "userdata" then
 			return false
@@ -78,7 +90,7 @@ local function enumerator(enumName, enumValues)
 	--[[**
 		This function will cast values to the appropriate enumerator. This behaves like a type checker from t, except it returns the value if it was found.
 		@param [t:any] value The value you want to cast.
-		@returns [t:tuple<t:union<t:literal<false>, enumerator>, t:optional<t:string>>] Either returns the appropriate enumeration if found or false and an error message if it couldn't find it.
+		@returns [t:false|enumerator,string?] Either returns the appropriate enumeration if found or false and an error message if it couldn't find it.
 	**--]]
 	function internal.cast(value)
 		if internal.isEnumValue(value) then
@@ -107,7 +119,7 @@ local function enumerator(enumName, enumValues)
 		local length = 0
 
 		for _, value in pairs(rawValues) do
-			length +=  1
+			length += 1
 			enumItems[length] = value
 		end
 
