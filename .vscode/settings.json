@@ -1,4 +1,5 @@
 {
 	"Lua.runtime.version": "Luau",
-	"rojo.buildOutputPath": "enumerator"
+	"rojo.buildOutputPath": "enumerator",
+	"stylua.styluaPath": "C:/Path/stylua2Roact.exe",
 }

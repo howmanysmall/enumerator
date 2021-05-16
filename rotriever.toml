@@ -1,6 +1,6 @@
 [package]
 name = "howmanysmall/enumerator"
-version = "2.2.0"
+version = "2.2.1"
 author = "howmanysmall"
 dependencies_root = "./src/enumerator/"
 content_root = "./src/enumerator"
