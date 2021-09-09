@@ -6,9 +6,9 @@ local t = require(script.t)
 
 local ALREADY_USED_NAME_ERROR = "Already used %q as a value name in enum %q."
 local ALREADY_USED_VALUE_ERROR = "Already used %q as a value in enum %q."
+local CANNOT_USE_ERROR = "Cannot use '%s' as a value"
 local INVALID_MEMBER_ERROR = "%q (%s) is not a valid member of %s"
 local INVALID_VALUE_ERROR = "Couldn't cast value %q (%s) to enumerator %q"
-local CANNOT_USE_ERROR = "Cannot use '%s' as a value"
 
 local BLACKLISTED_VALUES = {
 	cast = true,
@@ -17,6 +17,7 @@ local BLACKLISTED_VALUES = {
 	isEnumValue = true,
 }
 
+-- stylua: ignore
 local enumeratorTuple = t.tuple(
 	t.string,
 	t.union(
@@ -43,7 +44,7 @@ local function lockTable(tab, name)
 	})
 end
 
---t:union<t:array<t:string>, t:keys<t:string>>
+type EnumValues = {string} | {[string]: any}
 
 --[[**
 	Creates a new enumeration.
@@ -51,7 +52,7 @@ end
 	@param [t:{string}|{string:any}] enumValues The values of the enumeration.
 	@returns [t:userdata] a new enumeration
 **--]]
-local function enumerator(enumName, enumValues)
+local function enumerator(enumName: string, enumValues: EnumValues)
 	assert(enumeratorTuple(enumName, enumValues))
 
 	local enum = newproxy(true)
@@ -207,5 +208,42 @@ local function enumerator(enumName, enumValues)
 
 	return enum
 end
+
+export type EnumeratorItem<Value> = {
+	--
+	name: string,
+	type: EnumeratorObject<Value>,
+	value: Value,
+
+	rawName: () -> string,
+	rawType: () -> EnumeratorObject<Value>,
+	rawValue: () -> Value,
+}
+
+export type EnumeratorObject<Value> = {
+	--
+	cast: (value: any) -> (EnumeratorItem<Value> | boolean, string?),
+	fromRawValue: (rawValue: Value) -> EnumeratorItem<Value>?,
+	getEnumeratorItems: () -> {EnumeratorItem<Value>},
+	isEnumValue: (value: any) -> boolean,
+}
+
+-- If you wish to use the above types to define an enum, you can do it as such:
+--[[
+
+local enumerator = require("enumerator")
+type EnumeratorItem<Value> = enumerator.EnumeratorItem<Value>
+
+export type RunServiceEvent = {
+	--
+	Heartbeat: EnumeratorItem<string>,
+	RenderStepped: EnumeratorItem<string>,
+	Stepped: EnumeratorItem<string>,
+} & enumerator.EnumeratorObject<string>
+
+local RunServiceEvent: RunServiceEvent = enumerator("RunServiceEvent", {"Heartbeat", "RenderStepped", "Stepped"}) :: RunServiceEvent
+return RunServiceEvent
+
+--]]
 
 return enumerator
