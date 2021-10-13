@@ -69,6 +69,7 @@ end
 	@interface EnumeratorItem
 	@tag Enum
 	@readonly
+	@within EnumeratorObject
 	.name string -- The name of the EnumeratorItem.
 	.type EnumeratorObject<Value> -- Returns the EnumeratorObject that this EnumeratorItem belongs to.
 	.value Value -- The value of the EnumeratorItem.
@@ -81,11 +82,15 @@ end
 	@interface EnumeratorObject
 	@tag Enum
 	@readonly
+	@within Enumerator
 	.cast (value: any) -> (EnumeratorItem<Value> | boolean, string?) -- Attempts to cast a value to an EnumeratorItem.
 	.fromRawValue (rawValue: Value) -> EnumeratorItem<Value>? -- Attempts to create an EnumeratorItem from a raw value.
 	.getEnumeratorItems () -> {EnumeratorItem<Value>} -- Returns a table of all EnumeratorItems in the EnumeratorObject.
 	.getSortedEnumeratorItems () -> {EnumeratorItem<Value>} -- Returns a table of all EnumeratorItems in the EnumeratorObject, sorted by value.
 	.isEnumValue (value: any) -> boolean -- Returns whether or not a value is an EnumeratorItem.
+]=]
+--[=[
+	@class Enumerator
 ]=]
 
 --[=[
