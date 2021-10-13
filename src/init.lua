@@ -68,7 +68,6 @@ end
 	An EnumeratorItem is meant to represent a unique value.
 	@interface EnumeratorItem
 	@tag Enum
-	@readonly
 	@within EnumeratorObject
 	.name string -- The name of the EnumeratorItem.
 	.type EnumeratorObject<Value> -- Returns the EnumeratorObject that this EnumeratorItem belongs to.
@@ -81,7 +80,6 @@ end
 	An EnumeratorObject is meant to represent a collection of unique values.
 	@interface EnumeratorObject
 	@tag Enum
-	@readonly
 	@within Enumerator
 	.cast (value: any) -> (EnumeratorItem<Value> | boolean, string?) -- Attempts to cast a value to an EnumeratorItem.
 	.fromRawValue (rawValue: Value) -> EnumeratorItem<Value>? -- Attempts to create an EnumeratorItem from a raw value.
@@ -89,9 +87,12 @@ end
 	.getSortedEnumeratorItems () -> {EnumeratorItem<Value>} -- Returns a table of all EnumeratorItems in the EnumeratorObject, sorted by value.
 	.isEnumValue (value: any) -> boolean -- Returns whether or not a value is an EnumeratorItem.
 ]=]
---[=[
-	@class Enumerator
-]=]
+
+--- @class Enumerator
+local Enumerator = {}
+
+--- @class EnumeratorObject
+local _ = {}
 
 --[=[
 	Creates a new `EnumeratorObject`.
@@ -105,9 +106,12 @@ end
 	})
 	```
 
+	@within Enumerator
+	@function Enumerator
+
 	@param enumName string -- The name of the enumeration.
 	@param enumValues {string} | {[string]: any} -- The values of the enumeration.
-	@returns EnumeratorObject -- The new EnumeratorObject.
+	@return EnumeratorObject -- The new EnumeratorObject.
 ]=]
 local function enumerator(enumName: string, enumValues: EnumValues)
 	assert(enumeratorTuple(enumName, enumValues))
@@ -353,6 +357,8 @@ local function enumerator(enumName: string, enumValues: EnumValues)
 	return enum
 end
 
+Enumerator.Enumerator = enumerator
+
 -- If you wish to use the above types to define an enum, you can do it as such:
 --[[
 
@@ -370,4 +376,8 @@ return RunServiceEvent
 
 --]]
 
-return enumerator
+return setmetatable(Enumerator, {
+	__call = function(_, enumName: string, enumValues: EnumValues)
+		return enumerator(enumName, enumValues)
+	end,
+})
