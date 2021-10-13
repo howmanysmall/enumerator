@@ -1,7 +1,4 @@
 {
 	"name": "enumerator",
-	"tree": {
-		"$path": "src/enumerator",
-		"$ignoreUnknownInstances": true
-	}
+	"tree": {"$path": "src/enumerator"}
 }
