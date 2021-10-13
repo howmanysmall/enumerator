@@ -1,0 +1,26 @@
+changelog = false
+gitSourceBranch = "main"
+
+[docusaurus]
+tagline = "Custom Enumeration implementation for Roblox"
+
+[[navbar.items]]
+href = "https://discord.gg/mhtGUS8"
+label = "Discord"
+position = "right"
+
+[home]
+enabled = true
+includeReadme = false
+
+[[home.features]]
+title = "Feature parity with enumerate"
+description = "enumerator was built upon the foundation of enumerate by Roblox, which is unreleased with the end goal of being a licensed version with more features."
+
+[[home.features]]
+title = "Enum Casting"
+description = "enumerator supports casting enums based on their value so that you can pass the value or the enum itself and get the same result, thus reducing the amount of checks you have to do."
+
+[[home.features]]
+title = "Features taken from Roblox Enums"
+description = "Enums made with enumerator follow the base API of enumerate, but also have features from Roblox Enums such as .value, .name, and getting every EnumeratorItem."

@@ -1,0 +1,7 @@
+[package]
+name = "howmanysmall/enumerator"
+version = "2.2.2"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+[dependencies]
