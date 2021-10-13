@@ -44,3 +44,10 @@ node_modules
 include
 out
 src/enumerator/test.ts
+
+.vscode/settings.json
+
+enumerator.rbxm
+enumerator.rbxmx
+
+build
