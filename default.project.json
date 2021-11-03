@@ -1,4 +1,4 @@
 {
 	"name": "enumerator",
-	"tree": {"$path": "src/enumerator"}
+	"tree": {"$path": "src"}
 }
